@@ -1,14 +1,28 @@
-#include <iostream>
-#include <string>
-using namespace std
+#include <SDL3/SDL.h>
 
-class assignment {
+int main()
+{
+    SDL_Init(SDL_INIT_VIDEO);
 
-private:
-    string brand;
-    string model;
-    int year;
+    SDL_Window* window =
+        SDL_CreateWindow("My App", 800, 600, 0);
 
-public:
+    bool running = true;
+    SDL_Event event;
 
-};
+    while (running) {
+        while (SDL_PollEvent(&event)) {
+            if (event.type == SDL_EVENT_QUIT)
+                running = false;
+
+            if (event.type == SDL_EVENT_KEY_DOWN) {
+                if (event.key.key == SDLK_A) {
+                    // A pressed
+                }
+            }
+        }
+    }
+
+    SDL_DestroyWindow(window);
+    SDL_Quit();
+}

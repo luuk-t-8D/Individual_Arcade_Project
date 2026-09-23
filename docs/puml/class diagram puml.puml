@@ -1,0 +1,85 @@
+@startuml
+
+top to bottom direction
+
+' =========================
+' Classes
+' =========================
+
+class Game {
+    +processPlayerInput()
+    +controlGameState()
+    +detectCharacterDeath()
+    +restartGame()
+    +quitGame()
+}
+
+class "Input/Keyboard" as InputKeyboard {
+    +detectStartInput()
+    +detectMovementInput()
+    +detectActionInput()
+    +detectBlockInput()
+}
+
+class Character {
+    -health : int
+    +move()
+    +performAction()
+    +blockAttack()
+    +receiveDamage()
+    +getHealth() : int
+    +die()
+}
+
+class Enemy {
+    -health : int
+    +performAttack()
+    +receiveDamage()
+    +getHealth() : int
+    +die()
+}
+
+class Attack {
+    +isBlocked()
+    +dealDamage()
+}
+
+class StartupScreen {
+    +startGame()
+    +displayStartupScreen()
+}
+
+class GameOverScreen {
+    +displayGameOverScreen()
+    +restart()
+    +quit()
+}
+
+
+' =========================
+' Relationships
+' =========================
+
+' Game dependencies
+Game ..> InputKeyboard 
+Game ..> StartupScreen 
+Game ..> GameOverScreen 
+
+' Game has an ongoing relationship with the Character
+Game -- Character 
+
+' Input/Keyboard is used by Character
+InputKeyboard -- Character 
+
+' Character interacts with Enemy
+Character ..o Attack
+
+' Enemy uses Attack
+Enemy ..o Attack 
+
+
+' Screens interact with Game
+StartupScreen ..> Game 
+GameOverScreen ..> Game 
+
+@enduml
